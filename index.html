@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Imaz MUA</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <h1>Imaz MUA</h1>
+            <p>Makeup Artist</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1 class="logo">Imaz MUA</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about">Tentang Saya</a></li>
+                    <li><a href="#price-list">Price List</a></li>
+                    <li><a href="#testimonials">Testimoni</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Background with Content -->
+    <div class="background-container">
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="overlay">
+                <div class="container">
+                    <h2>Tentang Saya</h2>
+                    <p>
+                        Saya <strong>Imaz MUA</strong>, seorang makeup artist yang berdedikasi untuk mempercantik keindahan alami setiap klien.
+                        Dengan pengalaman di bidang makeup pengantin, editorial, dan acara spesial, saya menciptakan tampilan timeless dan unik.
+                    </p>
+                    <p>
+                        Apakah untuk hari besar, pemotretan, atau sekadar ingin tampil percaya diri, saya siap membantu Anda.
+                        Mari berkolaborasi dan ciptakan keajaiban bersama!
+                    </p>
+                    <p style="text-align: center;">
+                        <a href="#contact" class="cta-button">Hubungi Saya Sekarang!</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Price List Section -->
+        <section id="price-list" class="price-list">
+            <div class="overlay">
+                <div class="container">
+                    <h2>Price List</h2>
+                    <div class="price-grid">
+                        <div class="price-item">
+                            <h3>Makeup Pengantin</h3>
+                            <p>Rp 2.500.000</p>
+                            <button class="detail-btn">Klik Lebih Detail</button>
+                            <div class="description" style="display: none;">
+                                <p>Include: Makeup, Hairstyle, Accessories.</p>
+                            </div>
+                        </div>
+                        <div class="price-item">
+                            <h3>Makeup Editorial</h3>
+                            <p>Rp 1.500.000</p>
+                            <button class="detail-btn">Klik Lebih Detail</button>
+                            <div class="description" style="display: none;">
+                                <p>Include: Makeup, Photoshoot Session.</p>
+                            </div>
+                        </div>
+                        <div class="price-item">
+                            <h3>Makeup Acara Spesial</h3>
+                            <p>Rp 1.000.000</p>
+                            <button class="detail-btn">Klik Lebih Detail</button>
+                            <div class="description" style="display: none;">
+                                <p>Include: Makeup, Touch-up Kit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials">
+            <div class="overlay">
+                <div class="container">
+                    <h2>Testimoni Pelanggan</h2>
+                    <div class="testimonial-grid">
+                        <div class="testimonial-item">
+                            <img src="testimonial1.jpg" alt="Testimonial 1" class="testimonial-image">
+                            <div class="testimonial-text">
+                                <p>"Hasil riasannya sangat memuaskan! Saya merasa seperti putri di hari pernikahan saya."</p>
+                                <p><strong>- Nama Pelanggan 1</strong></p>
+                            </div>
+                        </div>
+                        <div class="testimonial-item">
+                            <img src="testimonial2.jpg" alt="Testimonial 2" class="testimonial-image">
+                            <div class="testimonial-text">
+                                <p>"Profesional dan ramah! Hasil riasannya flawless dan tahan lama."</p>
+                                <p><strong>- Nama Pelanggan 2</strong></p>
+                            </div>
+                        </div>
+                        <div class="testimonial-item">
+                            <img src="testimonial3.jpg" alt="Testimonial 3" class="testimonial-image">
+                            <div class="testimonial-text">
+                                <p>"Terima kasih banyak atas pelayanan yang luar biasa. Akan merekomendasikan ke teman-teman!"</p>
+                                <p><strong>- Nama Pelanggan 3</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <h2>Kontak Saya</h2>
+            <p>Email: your-email@example.com</p>
+            <p>Phone: (123) 456-7890</p>
+            <p>&copy; 2023 Portfolio Imaz MUA</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Icon -->
+    <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-icon">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
+    </a>
+
+    <!-- JavaScript for Splash Screen and Price List -->
+    <script>
+        // JavaScript untuk menghilangkan splash screen setelah beberapa detik
+        window.addEventListener('load', () => {
+            const splashScreen = document.getElementById('splash-screen');
+            setTimeout(() => {
+                splashScreen.style.opacity = '0'; // Mengubah opacity menjadi 0 untuk efek fade-out
+                setTimeout(() => {
+                    splashScreen.style.display = 'none'; // Menghilangkan splash screen dari DOM
+                }, 1000); // Waktu delay sesuai durasi transisi CSS
+            }, 3000); // Durasi splash screen (3 detik)
+        });
+
+        // JavaScript untuk menampilkan/menyembunyikan deskripsi price list
+        document.querySelectorAll('.detail-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const description = button.nextElementSibling;
+                if (description.style.display === 'none' || description.style.display === '') {
+                    description.style.display = 'block';
+                    description.style.opacity = '0';
+                    setTimeout(() => {
+                        description.style.opacity = '1'; // Efek transisi fade-in
+                    }, 10);
+                } else {
+                    description.style.opacity = '0';
+                    setTimeout(() => {
+                        description.style.display = 'none'; // Efek transisi fade-out
+                    }, 300);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
