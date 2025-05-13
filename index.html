@@ -4,218 +4,355 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Imaz MUA</title>
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Google Font: Playfair Display -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --cream: #f5f1ea;
-      --black: #000;
       --white: #fff;
+      --accent: #967e76;
       --transition: 0.5s ease;
       --header-height: 60px;
-      --footer-height: 200px;
     }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       height: 100%;
       font-family: 'Playfair Display', serif;
       overflow-x: hidden;
       scroll-behavior: smooth;
-      background: var(--black);
       color: var(--white);
+      background: #000;
     }
+
     /* Header */
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
       height: var(--header-height);
-      background: var(--black);
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
+      z-index: 100;
       font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: 1px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
+
     /* Main Sections */
     main {
       margin-top: var(--header-height);
-      scroll-snap-type: y mandatory;
-      overflow-y: auto;
       height: calc(100vh - var(--header-height));
-      padding-bottom: var(--footer-height);
-      position: relative;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
     }
+
     section {
       position: relative;
-      height: 100%;
+      height: 100vh;
       scroll-snap-align: start;
       background-size: cover;
       background-position: center;
-      filter: grayscale(100%) brightness(40%);
+      filter: grayscale(70%) brightness(40%);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: filter var(--transition);
+      transition: filter 0.5s ease;
     }
-    /* Overlay Content */
-    .overlay {
-      background: rgba(245,241,234,0.85);
-      padding: 2rem;
-      border-radius: 8px;
-      max-width: 90%;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity var(--transition), transform var(--transition);
-      color: var(--black);
+
+    section:hover {
+      filter: grayscale(50%) brightness(50%);
     }
-    .overlay.visible {
-      opacity: 1;
-      transform: translateY(0);
+
+    /* Overlay */
+    .section-wrapper {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        transparent 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 0 100px 60px;
+      z-index: 2;
     }
-    .overlay h1 {
+
+    /* Content */
+    .section-content {
+      max-width: 500px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      z-index: 1;
+    }
+
+    .section-content h1 {
       font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 0.5rem;
     }
-    .overlay ul { list-style: none; text-align: left; line-height: 1.6; }
-    /* Scroll indicator */
+
+    /* Price List */
+    .price-list {
+      list-style: none;
+      line-height: 2;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .price-list li:hover {
+      transform: translateX(5px);
+    }
+
+    .price-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .price-list strong {
+      color: var(--accent);
+      filter: brightness(1.8);
+      text-shadow: 0 0 5px rgba(150, 126, 118, 0.5);
+    }
+
+    /* Terms */
+    .terms {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(255,255,255,0.3);
+    }
+
+    .terms li {
+      margin-bottom: 0.4rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .terms li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* Scroll Indicator - Updated for all sections */
     .scroll-indicator {
       position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      width: 24px; height: 24px;
+      bottom: 40px;
+      left: 60px;
+      width: 24px;
+      height: 24px;
       border-bottom: 2px solid var(--white);
       border-right: 2px solid var(--white);
+      transform: rotate(45deg);
       animation: bounce 2s infinite;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+      z-index: 3;
     }
+
+    section:hover .scroll-indicator {
+      opacity: 1;
+    }
+
     @keyframes bounce {
-      0%,20%,50%,80%,100% { transform: translateX(-50%) rotate(45deg) translateY(0); }
-      40% { transform: translateX(-50%) rotate(45deg) translateY(10px); }
-      60% { transform: translateX(-50%) rotate(45deg) translateY(5px); }
+      0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
+      40% { transform: rotate(45deg) translateY(10px); }
+      60% { transform: rotate(45deg) translateY(5px); }
     }
-    /* Section Backgrounds */
+
+    /* WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 101;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform var(--transition);
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
+
+    .whatsapp-float img {
+      width: 70%;
+      height: 70%;
+      filter: brightness(0) invert(1);
+    }
+
+    /* Background Images */
     #wisuda      { background-image: url('wisuda.jpg'); }
     #pendamping  { background-image: url('pendamping_wisuda.jpg'); }
     #photoshoot  { background-image: url('photoshoot.jpg'); }
     #party       { background-image: url('party.jpg'); }
-    /* Footer Terms & Conditions */
-    .terms-footer {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: var(--black);
-      color: var(--white);
-      padding: 1rem 2rem;
-      border-top: 1px solid var(--white);
-      max-height: var(--footer-height);
-      overflow-y: auto;
-      z-index: 1000;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-    .terms-footer h2 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 700;
-    }
-    .terms-footer ul { list-style: none; }
-    .terms-footer li { margin: 0.3rem 0; }
-    /* WhatsApp Shortcut Icon */
-    .whatsapp-float {
-      position: fixed;
-      bottom: calc(var(--footer-height) - 60px);
-      right: 20px;
-      width: 50px; height: 50px;
-      z-index: 1001;
-      transition: transform var(--transition);
-    }
-    .whatsapp-float:hover { transform: scale(1.1); }
-    .whatsapp-float img { width: 100%; height: 100%; }
+
     /* Responsive */
     @media (max-width: 768px) {
-      header { font-size: 1.2rem; }
-      .terms-footer { padding: 0.8rem 1rem; font-size: 0.85rem; }
-      .overlay h1 { font-size: 2rem; }
-      .overlay ul { font-size: 0.9rem; }
+      .section-wrapper {
+        padding: 0 0 80px 30px;
+      }
+      
+      .section-content h1 {
+        font-size: 2rem;
+      }
+      
+      .scroll-indicator {
+        left: 30px;
+        bottom: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-wrapper {
+        padding: 0 0 80px 20px;
+      }
+      
+      .section-content h1 {
+        font-size: 1.8rem;
+      }
+      
+      .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+      }
+      
+      .scroll-indicator {
+        left: 20px;
+        bottom: 20px;
+      }
     }
   </style>
 </head>
 <body>
+
   <header><i class="fas fa-paint-brush"></i> Imaz MUA</header>
+
   <main>
+    <!-- Wisuda -->
     <section id="wisuda">
-      <div class="overlay"><h1><i class="fas fa-graduation-cap"></i> Wisuda</h1>
-        <ul>
-          <li>• Make-up only: <strong>Rp. 200.000</strong></li>
-          <li>• Make-up + Hijabdo: <strong>Rp. 220.000</strong></li>
-          <li>• Hairstyle: <strong>Rp. 150.000</strong></li>
-        </ul>
+      <div class="section-wrapper">
+        <div class="section-content">
+          <h1><i class="fas fa-graduation-cap"></i> Wisuda</h1>
+          <ul class="price-list">
+            <li>Make-up only: <strong>Rp. 200.000</strong></li>
+            <li>Make-up + Hijabdo: <strong>Rp. 220.000</strong></li>
+            <li>Hairstyle: <strong>Rp. 150.000</strong></li>
+          </ul>
+          <ul class="terms">
+            <li>DP 50% untuk booking tanggal</li>
+            <li>Pelunasan max H-3 sebelum acara</li>
+            <li>Cancel by client: DP hangus</li>
+			<li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
+			<li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
+            <li>Transfer BRI: 300601033148535 (Halimatu Zahro)</li>
+          </ul>
+        </div>
       </div>
       <div class="scroll-indicator"></div>
     </section>
+
+    <!-- Pendamping Wisuda -->
     <section id="pendamping">
-      <div class="overlay"><h1><i class="fas fa-user-friends"></i> Pendamping Wisuda</h1>
-        <ul>
-          <li>• Make-up only: <strong>Rp. 180.000</strong></li>
-          <li>• Make-up + Hijabdo: <strong>Rp. 200.000</strong></li>
-          <li>• Hairstyle: <strong>Rp. 150.000</strong></li>
-        </ul>
+      <div class="section-wrapper">
+        <div class="section-content">
+          <h1><i class="fas fa-user-friends"></i> Pendamping Wisuda</h1>
+          <ul class="price-list">
+            <li>Make-up only: <strong>Rp. 180.000</strong></li>
+            <li>Make-up + Hijabdo: <strong>Rp. 200.000</strong></li>
+            <li>Hairstyle: <strong>Rp. 150.000</strong></li>
+          </ul>
+          <ul class="terms">
+            <li>DP 50% untuk booking tanggal</li>
+            <li>Pelunasan max H-3 sebelum acara</li>
+            <li>Cancel by client: DP hangus</li>
+			<li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
+			<li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
+            <li>Transfer BRI: 300601033148535 (Halimatu Zahro)</li>
+          </ul>
+        </div>
       </div>
+      <div class="scroll-indicator"></div>
     </section>
+
+    <!-- Photoshoot -->
     <section id="photoshoot">
-      <div class="overlay"><h1><i class="fas fa-camera-retro"></i> Photoshoot</h1>
-        <ul>
-          <li>• Make-up only: <strong>Rp. 200.000</strong></li>
-          <li>• Make-up + Hijabdo: <strong>Rp. 220.000</strong></li>
-          <li>• Hairstyle: <strong>Rp. 150.000</strong></li>
-        </ul>
+      <div class="section-wrapper">
+        <div class="section-content">
+          <h1><i class="fas fa-camera-retro"></i> Photoshoot</h1>
+          <ul class="price-list">
+            <li>Make-up only: <strong>Rp. 200.000</strong></li>
+            <li>Make-up + Hijabdo: <strong>Rp. 220.000</strong></li>
+            <li>Hairstyle: <strong>Rp. 150.000</strong></li>
+          </ul>
+          <ul class="terms">
+            <li>DP 50% untuk booking tanggal</li>
+            <li>Pelunasan max H-3 sebelum acara</li>
+            <li>Cancel by client: DP hangus</li>
+			<li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
+			<li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
+            <li>Transfer BRI: 300601033148535 (Halimatu Zahro)</li>
+          </ul>
+        </div>
       </div>
+      <div class="scroll-indicator"></div>
     </section>
+
+    <!-- Party -->
     <section id="party">
-      <div class="overlay"><h1><i class="fas fa-glass-cheers"></i> Party</h1>
-        <ul>
-          <li>• Make-up only: <strong>Rp. 200.000</strong></li>
-          <li>• Make-up + Hijabdo: <strong>Rp. 220.000</strong></li>
-          <li>• Hairstyle: <strong>Rp. 150.000</strong></li>
-        </ul>
+      <div class="section-wrapper">
+        <div class="section-content">
+          <h1><i class="fas fa-glass-cheers"></i> Party</h1>
+          <ul class="price-list">
+            <li>Make-up only: <strong>Rp. 200.000</strong></li>
+            <li>Make-up + Hijabdo: <strong>Rp. 220.000</strong></li>
+            <li>Hairstyle: <strong>Rp. 150.000</strong></li>
+          </ul>
+          <ul class="terms">
+            <li>DP 50% untuk booking tanggal</li>
+            <li>Pelunasan max H-3 sebelum acara</li>
+            <li>Cancel by client: DP hangus</li>
+			<li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
+			<li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
+            <li>Transfer BRI: 300601033148535 (Halimatu Zahro)</li>
+          </ul>
+        </div>
       </div>
+      <div class="scroll-indicator"></div>
     </section>
   </main>
-  <!-- Terms & Conditions Footer -->
-  <div class="terms-footer">
-    <h2><i class="fas fa-file-contract"></i> Syarat & Ketentuan</h2>
-    <ul>
-      <li><strong>DP 50% untuk booking tanggal</strong></li>
-      <li><strong>Pelunasan max H-3 sebelum acara</strong></li>
-      <li>Cancel by client <strong>DP hangus</strong></li>
-      <li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
-      <li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
-      <li>Transfer hanya di Bank BRI No. Rek: <strong>300601033148535</strong> a.n. <strong>Halimatu Zahro</strong></li>
-    </ul>
-  </div>
-  <!-- WhatsApp Shortcut -->
-  <a class="whatsapp-float" href="https://wa.me/6281234567890" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Chat on WhatsApp" />
+
+  <!-- WhatsApp Float Button -->
+  <a class="whatsapp-float" href="https://wa.me/+6281334986256" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
   </a>
-  <script>
-    const sections = document.querySelectorAll('section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.querySelector('.overlay').classList.add('visible');
-      });
-    }, { threshold: 0.5 });
-    sections.forEach(sec => observer.observe(sec));
-  </script>
+
 </body>
 </html>
