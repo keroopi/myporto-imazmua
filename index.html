@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Imaz MUA</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css " crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display :wght@400;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --white: #fff;
@@ -14,7 +14,12 @@
       --header-height: 60px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+
     html, body {
       height: 100%;
       font-family: 'Playfair Display', serif;
@@ -52,20 +57,27 @@
       position: relative;
       height: 100vh;
       scroll-snap-align: start;
-      background-size: cover;
-      background-position: center;
-      filter: grayscale(70%) brightness(40%);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: filter 0.5s ease;
+      overflow: hidden;
     }
 
-    section:hover {
+    .section-background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(70%) brightness(40%);
+      transition: filter var(--transition);
+      z-index: 1;
+    }
+
+    section:hover .section-background {
       filter: grayscale(50%) brightness(50%);
     }
 
-    /* Overlay */
     .section-wrapper {
       position: absolute;
       top: 0; left: 0;
@@ -83,12 +95,11 @@
       z-index: 2;
     }
 
-    /* Content */
     .section-content {
       max-width: 500px;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-      z-index: 1;
+      z-index: 3;
     }
 
     .section-content h1 {
@@ -127,7 +138,6 @@
 
     .price-list strong {
       color: var(--accent);
-      filter: brightness(1.8);
       text-shadow: 0 0 5px rgba(150, 126, 118, 0.5);
     }
 
@@ -153,7 +163,7 @@
       color: var(--accent);
     }
 
-    /* Scroll Indicator - Updated for all sections */
+    /* Scroll Indicator */
     .scroll-indicator {
       position: absolute;
       bottom: 40px;
@@ -207,21 +217,19 @@
     }
 
     /* Background Images */
-    #wisuda      { background-image: url('wisuda.jpg'); }
-    #pendamping  { background-image: url('pendamping_wisuda.jpg'); }
-    #photoshoot  { background-image: url('photoshoot.jpg'); }
-    #party       { background-image: url('party.jpg'); }
+    #wisuda .section-background { background-image: url('wisuda.jpg'); }
+    #pendamping .section-background { background-image: url('pendamping_wisuda.jpg'); }
+    #photoshoot .section-background { background-image: url('photoshoot.jpg'); }
+    #party .section-background { background-image: url('party.jpg'); }
 
     /* Responsive */
     @media (max-width: 768px) {
       .section-wrapper {
         padding: 0 0 80px 30px;
       }
-      
       .section-content h1 {
         font-size: 2rem;
       }
-      
       .scroll-indicator {
         left: 30px;
         bottom: 30px;
@@ -232,18 +240,15 @@
       .section-wrapper {
         padding: 0 0 80px 20px;
       }
-      
       .section-content h1 {
         font-size: 1.8rem;
       }
-      
       .whatsapp-float {
         width: 50px;
         height: 50px;
         bottom: 20px;
         right: 20px;
       }
-      
       .scroll-indicator {
         left: 20px;
         bottom: 20px;
@@ -253,11 +258,15 @@
 </head>
 <body>
 
+  <!-- Header -->
   <header><i class="fas fa-paint-brush"></i> Imaz MUA</header>
 
+  <!-- Main Content -->
   <main>
+
     <!-- Wisuda -->
     <section id="wisuda">
+      <div class="section-background"></div>
       <div class="section-wrapper">
         <div class="section-content">
           <h1><i class="fas fa-graduation-cap"></i> Wisuda</h1>
@@ -270,8 +279,8 @@
             <li>DP 50% untuk booking tanggal</li>
             <li>Pelunasan max H-3 sebelum acara</li>
             <li>Cancel by client: DP hangus</li>
-			<li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
-			<li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
+            <li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
+            <li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
             <li>Transfer BRI: 300601033148535 (Halimatu Zahro)</li>
           </ul>
         </div>
@@ -281,6 +290,7 @@
 
     <!-- Pendamping Wisuda -->
     <section id="pendamping">
+      <div class="section-background"></div>
       <div class="section-wrapper">
         <div class="section-content">
           <h1><i class="fas fa-user-friends"></i> Pendamping Wisuda</h1>
@@ -293,8 +303,8 @@
             <li>DP 50% untuk booking tanggal</li>
             <li>Pelunasan max H-3 sebelum acara</li>
             <li>Cancel by client: DP hangus</li>
-			<li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
-			<li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
+            <li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
+            <li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
             <li>Transfer BRI: 300601033148535 (Halimatu Zahro)</li>
           </ul>
         </div>
@@ -304,6 +314,7 @@
 
     <!-- Photoshoot -->
     <section id="photoshoot">
+      <div class="section-background"></div>
       <div class="section-wrapper">
         <div class="section-content">
           <h1><i class="fas fa-camera-retro"></i> Photoshoot</h1>
@@ -316,8 +327,8 @@
             <li>DP 50% untuk booking tanggal</li>
             <li>Pelunasan max H-3 sebelum acara</li>
             <li>Cancel by client: DP hangus</li>
-			<li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
-			<li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
+            <li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
+            <li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
             <li>Transfer BRI: 300601033148535 (Halimatu Zahro)</li>
           </ul>
         </div>
@@ -327,6 +338,7 @@
 
     <!-- Party -->
     <section id="party">
+      <div class="section-background"></div>
       <div class="section-wrapper">
         <div class="section-content">
           <h1><i class="fas fa-glass-cheers"></i> Party</h1>
@@ -339,19 +351,20 @@
             <li>DP 50% untuk booking tanggal</li>
             <li>Pelunasan max H-3 sebelum acara</li>
             <li>Cancel by client: DP hangus</li>
-			<li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
-			<li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
+            <li>Client menyediakan meja, kursi, dan stop kontak untuk mendukung proses make-up</li>
+            <li>Jenis make-up harus sesuai dengan acara; jika tidak, MUA berhak membatalkan atau meneruskan proses make-up</li>
             <li>Transfer BRI: 300601033148535 (Halimatu Zahro)</li>
           </ul>
         </div>
       </div>
       <div class="scroll-indicator"></div>
     </section>
+
   </main>
 
   <!-- WhatsApp Float Button -->
-  <a class="whatsapp-float" href="https://wa.me/+6281334986256" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+  <a class="whatsapp-float" href="https://wa.me/+6281334986256 " target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg " alt="WhatsApp" />
   </a>
 
 </body>
